@@ -1,7 +1,8 @@
-package com.zmeid.tracksportteam
+package com.zmeid.tracksportteam.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.zmeid.tracksportteam.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

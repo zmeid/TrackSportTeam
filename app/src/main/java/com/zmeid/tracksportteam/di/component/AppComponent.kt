@@ -2,6 +2,7 @@ package com.zmeid.tracksportteam.di.component
 
 import android.app.Application
 import com.zmeid.tracksportteam.BaseApplication
+import com.zmeid.tracksportteam.di.module.*
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
@@ -13,7 +14,12 @@ import javax.inject.Singleton
  */
 @Component(
     modules = [
-        AndroidSupportInjectionModule::class
+        AndroidSupportInjectionModule::class,
+        ViewModuleFactoryModule::class,
+        FragmentsModule::class,
+        WebServiceModule::class,
+        UtilsModule::class,
+        ContextModule::class
     ]
 )
 @Singleton

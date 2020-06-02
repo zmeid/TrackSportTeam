@@ -1,5 +1,27 @@
 <resources>
-    <string name="app_name">Track Sport Team</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">Track Team</string>
+
+    <!--region Team Search Fragment-->
+    <string name="search">Search</string>
+    <string name="type_to_search_team">Click search icon and type to search team</string>
+    <string name="league_tag">League:</string>
+    <string name="stadium_tag">Stadium:</string>
+    <string name="sport_tag">Sport:</string>
+    <string name="country_tag">Country:</string>
+    <string name="add_to_favorites">Add to Favorites</string>
+    <string name="favorites_description">Add the team to your favorites to receive live updates about team\'s event.
+        \n\nThis is a premium feature. By activating premium membership, you can enjoy premium features with no ads!</string>
+    <!--endregion-->
+
+    <!-- region searchErrors -->
+    <string name="nothing_found">We couldn\'t find any team :(</string>
+    <string name="search_there_is_an_error">There is an error :( \n {%1$s!}</string>
+    <string name="no_internet_error">We can\'t reach the host. Are you connected to internet?</string>
+    <string name="retry">Retry</string>
+    <!-- endregion -->
+
+    <string name="activate_premium">Activate Premium</string>
+    <string name="not_now">Not Now</string>
+    <string name="not_ready_feature">This feature is not implemented yet</string>
+
 </resources>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_view_launch"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    card_view:cardBackgroundColor="@android:color/background_light"
+    card_view:cardCornerRadius="10dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        tools:ignore="HardcodedText,RtlSymmetry,ContentDescription">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/circle_image_view_team_badge"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_view_team_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingStart="15dp"
+            android:text="Arsenal"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/imageView"
+            card_view:layout_constraintBottom_toBottomOf="@+id/circle_image_view_team_badge"
+            card_view:layout_constraintStart_toEndOf="@+id/circle_image_view_team_badge"
+            card_view:layout_constraintTop_toTopOf="@+id/circle_image_view_team_badge" />
+
+        <TextView
+            android:id="@+id/text_view_team_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="25dp"
+            android:text="The Emirates Stadium (known as Ashburton Grove prior to sponsorship, and as Arsenal Stadium for UEFA competitions) is a football stadium in Holloway, London, England, and the home of Arsenal. With a capacity of 60,704 it is the fourth-largest football stadium in England after Wembley Stadium, Old Trafford and Tottenham Hotspur Stadium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/circle_image_view_team_badge" />
+
+        <TextView
+            android:id="@+id/text_view_league_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="15dp"
+            android:paddingEnd="5dp"
+            android:text="@string/league_tag"
+            android:textStyle="bold"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@+id/text_view_sport_tag" />
+
+        <TextView
+            android:id="@+id/text_view_stadium_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="15dp"
+            android:paddingEnd="5dp"
+            android:text="@string/stadium_tag"
+            android:textStyle="bold"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@+id/text_view_league_tag" />
+
+        <TextView
+            android:id="@+id/text_view_sport_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="15dp"
+            android:paddingEnd="5dp"
+            android:text="@string/sport_tag"
+            android:textStyle="bold"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@+id/text_view_team_description" />
+
+        <TextView
+            android:id="@+id/text_view_league"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="English Premier League"
+            card_view:layout_constraintBottom_toBottomOf="@+id/text_view_league_tag"
+            card_view:layout_constraintStart_toEndOf="@+id/text_view_league_tag" />
+
+        <TextView
+            android:id="@+id/text_view_stadium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Emirates Stadium"
+            card_view:layout_constraintBottom_toBottomOf="@+id/text_view_stadium_tag"
+            card_view:layout_constraintStart_toEndOf="@+id/text_view_stadium_tag" />
+
+        <TextView
+            android:id="@+id/text_view_sport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Soccer"
+            card_view:layout_constraintBottom_toBottomOf="@+id/text_view_sport_tag"
+            card_view:layout_constraintStart_toEndOf="@+id/text_view_sport_tag" />
+
+        <TextView
+            android:id="@+id/text_view_country_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="15dp"
+            android:paddingEnd="5dp"
+            android:text="@string/country_tag"
+            android:textStyle="bold"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@+id/text_view_stadium_tag" />
+
+        <TextView
+            android:id="@+id/text_view_country"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="England"
+            card_view:layout_constraintBottom_toBottomOf="@+id/text_view_country_tag"
+            card_view:layout_constraintStart_toEndOf="@+id/text_view_country_tag" />
+
+        <ImageView
+            android:id="@+id/image_view_favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/circle_image_view_team_badge"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/circle_image_view_team_badge"
+            card_view:srcCompat="@drawable/ic_baseline_star_border" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

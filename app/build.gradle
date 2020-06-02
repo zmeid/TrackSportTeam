@@ -82,4 +82,9 @@ dependencies {
     // region Leakcanary
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakcanary_version"
     // endregion
+
+    // region Image
+    implementation "de.hdodenhof:circleimageview:$circle_imageview_version"
+    implementation "com.squareup.picasso:picasso:$picasso_version"
+    // endregion
 }

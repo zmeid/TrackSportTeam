@@ -34,7 +34,6 @@
             android:text="Arsenal"
             android:textSize="25sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/imageView"
             card_view:layout_constraintBottom_toBottomOf="@+id/circle_image_view_team_badge"
             card_view:layout_constraintStart_toEndOf="@+id/circle_image_view_team_badge"
             card_view:layout_constraintTop_toTopOf="@+id/circle_image_view_team_badge" />

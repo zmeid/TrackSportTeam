@@ -1,7 +1,7 @@
 package com.zmeid.tracksportteam.di.module
 
 import androidx.fragment.app.Fragment
-import com.zmeid.tracksportteam.view.ui.SearchTeamFragment
+import com.zmeid.tracksportteam.view.ui.fragment.SearchTeamFragment
 import dagger.Binds
 import dagger.Module
 

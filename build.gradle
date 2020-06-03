@@ -22,6 +22,7 @@ buildscript {
         test_rules_version = '1.1.0'
         circle_imageview_version = '2.2.0'
         picasso_version = '2.71828'
+        legacy_support = '1.0.0'
     }
 
     repositories {
@@ -31,6 +32,7 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:$gradle_version"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigation_version"
     }
 }
 

@@ -1,6 +1,7 @@
 package com.zmeid.tracksportteam.di.module
 
-import com.zmeid.tracksportteam.view.ui.SearchTeamFragment
+import com.zmeid.tracksportteam.view.ui.fragment.SearchTeamFragment
+import com.zmeid.tracksportteam.view.ui.fragment.TeamEventHistoryFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -11,4 +12,7 @@ import dagger.android.ContributesAndroidInjector
 abstract class FragmentsModule {
     @ContributesAndroidInjector(modules = [ViewModelsModule::class, ContextModule::class, UtilsModule::class])
     abstract fun contributeSearchTeamFragment(): SearchTeamFragment
+
+    @ContributesAndroidInjector(modules = [ViewModelsModule::class])
+    abstract fun contributeTeamEventHistoryFragment(): TeamEventHistoryFragment
 }

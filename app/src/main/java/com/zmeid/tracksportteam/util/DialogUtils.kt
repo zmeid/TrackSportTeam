@@ -6,8 +6,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import com.zmeid.tracksportteam.R
-import com.zmeid.tracksportteam.view.ui.BaseFragment
-import com.zmeid.tracksportteam.view.ui.SearchTeamFragment
+import com.zmeid.tracksportteam.view.ui.fragment.BaseFragment
+import com.zmeid.tracksportteam.view.ui.fragment.SearchTeamFragment
 import javax.inject.Inject
 
 /**

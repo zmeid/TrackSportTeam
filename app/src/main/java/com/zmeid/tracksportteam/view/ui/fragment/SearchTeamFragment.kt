@@ -1,4 +1,4 @@
-package com.zmeid.tracksportteam.view.ui
+package com.zmeid.tracksportteam.view.ui.fragment
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -8,15 +8,18 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.zmeid.tracksportteam.R
 import com.zmeid.tracksportteam.databinding.FragmentSearchTeamBinding
 import com.zmeid.tracksportteam.model.Team
-import com.zmeid.tracksportteam.util.*
+import com.zmeid.tracksportteam.util.DialogUtils
+import com.zmeid.tracksportteam.util.StringTrimDelegate
+import com.zmeid.tracksportteam.util.observeOnce
 import com.zmeid.tracksportteam.view.adapter.OnItemClickListener
 import com.zmeid.tracksportteam.view.adapter.TeamAdapter
 import com.zmeid.tracksportteam.view.interfaces.SearchViewOnQueryTextChangedListener
-import com.zmeid.tracksportteam.viewmodel.SearchTeamFragmentViewModel
+import com.zmeid.tracksportteam.viewmodel.SearchTeamViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -26,7 +29,7 @@ import javax.inject.Inject
 private const val ALERT_DIALOG_IS_SHOWING_TAG = "alertDialogIsShowingTag"
 
 class SearchTeamFragment : BaseFragment(), SearchViewOnQueryTextChangedListener,
-    DialogUtils.ActivatePremiumClickedListener {
+    DialogUtils.ActivatePremiumClickedListener, View.OnClickListener {
 
     @Inject
     lateinit var viewModelProviderFactory: ViewModelProvider.Factory
@@ -35,16 +38,10 @@ class SearchTeamFragment : BaseFragment(), SearchViewOnQueryTextChangedListener,
     lateinit var teamAdapter: TeamAdapter
 
     @Inject
-    lateinit var layoutManager: LinearLayoutManager
-
-    @Inject
-    lateinit var errorMessageGenerator: ErrorMessageGenerator
-
-    @Inject
     lateinit var dialogUtils: DialogUtils
 
     private lateinit var binding: FragmentSearchTeamBinding
-    private lateinit var searchTeamFragmentViewModel: SearchTeamFragmentViewModel
+    private lateinit var searchTeamViewModel: SearchTeamViewModel
     private lateinit var searchViewMenu: SearchView
     private lateinit var searchViewMenuItem: MenuItem
     private var searchQueryDelayJob: Job? = null
@@ -55,10 +52,10 @@ class SearchTeamFragment : BaseFragment(), SearchViewOnQueryTextChangedListener,
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
 
-        searchTeamFragmentViewModel = ViewModelProvider(
+        searchTeamViewModel = ViewModelProvider(
             this,
             viewModelProviderFactory
-        ).get(SearchTeamFragmentViewModel::class.java)
+        ).get(SearchTeamViewModel::class.java)
 
         observeTeamSearchResult()
     }
@@ -69,11 +66,25 @@ class SearchTeamFragment : BaseFragment(), SearchViewOnQueryTextChangedListener,
     ): View? {
         binding = FragmentSearchTeamBinding.inflate(inflater, container, false)
 
+        getSupportActionBar()?.setDisplayHomeAsUpEnabled(false)
+
         binding.apply {
-            recyclerviewTeamSearch.layoutManager = layoutManager
+            recyclerviewTeamSearch.layoutManager = LinearLayoutManager(context)
             recyclerviewTeamSearch.adapter = teamAdapter
         }
+
         setAdapterItemClickListener()
+
+        binding.errorComponentHolder.buttonRetry.setOnClickListener(this)
+
+        if (teamAdapter.itemCount > 0) {
+            hideUserMessageText(binding.errorComponentHolder.textViewUserMessage)
+        } else {
+            showUserMessage(
+                binding.errorComponentHolder.textViewUserMessage,
+                getString(R.string.type_to_search_team)
+            )
+        }
 
         return binding.root
     }
@@ -99,58 +110,35 @@ class SearchTeamFragment : BaseFragment(), SearchViewOnQueryTextChangedListener,
     }
 
     /**
-     * Observes if there are any changes in teamSearchResult live data and calls [handleTeamSearchResult]
+     * Observes if there are any changes in teamSearchResult live data and calls [handleAPIResult]
      */
     private fun observeTeamSearchResult() {
-        searchTeamFragmentViewModel.teamSearchResult.observe(this, Observer {
+        searchTeamViewModel.teamSearchResult.observe(this, Observer {
             Timber.d("TEAM SEARCH RESPONSE: \n $it")
-            handleTeamSearchResult(it)
+            handleAPIResult(
+                it,
+                binding.errorComponentHolder.textViewUserMessage,
+                binding.errorComponentHolder.buttonRetry,
+                teamAdapter
+            )
         })
     }
 
     /**
-     * Handles team search result according to [ApiResponseWrapper]'s status.
-     *
-     * If [ApiResponseWrapper.Status.LOADING], it shows progress bar, hides user messages and hides retry button.
-     * If [ApiResponseWrapper.Status.SUCCESS], updates [teamAdapter] with received data, hides progress bar, hides user messages and hides retry button. If the received data is empty; shows a message to user.
-     * If [ApiResponseWrapper.Status.ERROR], it shows the error message and retry button. Clears recyclerview.
-     */
-    private fun handleTeamSearchResult(apiResponseWrapper: ApiResponseWrapper<List<Team>>) {
-        when (apiResponseWrapper.status) {
-            ApiResponseWrapper.Status.LOADING -> {
-                showProgressBar(binding.progressBarTeamSearchFragment)
-                hideUserMessageText(binding.textViewUserMessage)
-                hideRetryButton(binding.buttonRetry)
-            }
-            ApiResponseWrapper.Status.SUCCESS -> {
-                hideProgressBar(binding.progressBarTeamSearchFragment)
-                hideUserMessageText(binding.textViewUserMessage)
-                hideRetryButton(binding.buttonRetry)
-                val teamList = apiResponseWrapper.data
-                teamAdapter.submitList(teamList)
-                if (teamList == null || teamList.isEmpty()) showUserMessage(
-                    binding.textViewUserMessage,
-                    getString(R.string.nothing_found)
-                )
-            }
-            ApiResponseWrapper.Status.ERROR -> {
-                hideProgressBar(binding.progressBarTeamSearchFragment)
-                val errorMessage =
-                    errorMessageGenerator.generateErrorMessage(apiResponseWrapper.exception!!)
-                teamAdapter.submitList(null)
-                showUserMessage(binding.textViewUserMessage, errorMessage)
-                showRetryButton(binding.buttonRetry)
-            }
-        }
-    }
-
-    /**
-     * Catches clicks on favorite button.
+     * Catches clicks on favorite button and team rows.
      */
     private fun setAdapterItemClickListener() {
         teamAdapter.setOnItemClickedListener(object : OnItemClickListener {
             override fun onFavoriteClicked(team: Team) {
                 showAddToFavoriteAlertDialog()
+            }
+
+            override fun onTeamClicked(team: Team) {
+                val action =
+                    SearchTeamFragmentDirections.actionSearchTeamFragmentToTeamEventHistoryFragment(
+                        team.id
+                    )
+                view?.findNavController()?.navigate(action)
             }
         })
     }
@@ -171,7 +159,7 @@ class SearchTeamFragment : BaseFragment(), SearchViewOnQueryTextChangedListener,
      * If search view is not empty and the devices is rotated; it observes once to get last searched word.
      */
     private fun observeLastSearchWord() {
-        searchTeamFragmentViewModel.teamLastSearchWord.observeOnce(this, Observer {
+        searchTeamViewModel.teamLastSearchWord.observeOnce(this, Observer {
             searchViewMenuItem.expandActionView()
             searchViewMenu.setQuery(it, false)
             wordToSearch = it
@@ -184,7 +172,7 @@ class SearchTeamFragment : BaseFragment(), SearchViewOnQueryTextChangedListener,
             delay(700)
             if (word.isNotBlank()) {
                 wordToSearch = word
-                searchTeamFragmentViewModel.searchTeam(wordToSearch)
+                searchTeamViewModel.searchTeam(wordToSearch, false)
             }
         }
         return true
@@ -198,5 +186,13 @@ class SearchTeamFragment : BaseFragment(), SearchViewOnQueryTextChangedListener,
     private fun showAddToFavoriteAlertDialog() {
         alertDialog = dialogUtils.createAddToFavoriteDialog()
         alertDialog?.show()
+    }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            binding.errorComponentHolder.buttonRetry.id -> {
+                searchTeamViewModel.searchTeam(wordToSearch, true)
+            }
+        }
     }
 }

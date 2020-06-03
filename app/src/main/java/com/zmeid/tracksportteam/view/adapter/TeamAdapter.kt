@@ -47,7 +47,16 @@ class TeamAdapter @Inject constructor() :
                 into(holder.binding.circleImageViewTeamBadge)
             }
 
-        holder.binding.imageViewFavorite.setOnClickListener { listener?.onFavoriteClicked(team) }
+        setListeners(holder.binding, team)
+    }
+
+    private fun setListeners(binding: TeamSearchResultRowBinding, team: Team) {
+        binding.apply {
+            root.setOnClickListener {
+                listener?.onTeamClicked(team)
+            }
+            imageViewFavorite.setOnClickListener { listener?.onFavoriteClicked(team) }
+        }
     }
 
     class TeamViewHolder(val binding: TeamSearchResultRowBinding) :
@@ -68,6 +77,7 @@ class TeamAdapter @Inject constructor() :
 
 interface OnItemClickListener {
     fun onFavoriteClicked(team: Team)
+    fun onTeamClicked(team: Team)
 }
 
 private class TeamListDiffCallback : DiffUtil.ItemCallback<Team>() {

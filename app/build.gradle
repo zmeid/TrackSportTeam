@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: "androidx.navigation.safeargs.kotlin"
 
 android {
     compileSdkVersion 29
@@ -26,6 +27,14 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    //Version 1.8 is needed for Navigation Component Safe Args
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 }
 
@@ -86,5 +95,9 @@ dependencies {
     // region Image
     implementation "de.hdodenhof:circleimageview:$circle_imageview_version"
     implementation "com.squareup.picasso:picasso:$picasso_version"
+    // endregion
+
+    // region Legacy support
+    implementation "androidx.legacy:legacy-support-v4:$legacy_support"
     // endregion
 }

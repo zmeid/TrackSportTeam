@@ -4,17 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.ui.fragment.SearchTeamFragment">
+    tools:context=".view.ui.fragment.TeamEventHistoryFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview_team_search"
+        android:id="@+id/recyclerview_team_event_history"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/team_search_result_row" />
+        tools:listitem="@layout/team_event_history_result_row" />
 
     <include
         android:id="@+id/error_component_holder"

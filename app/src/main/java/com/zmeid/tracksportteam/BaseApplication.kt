@@ -1,5 +1,6 @@
 package com.zmeid.tracksportteam
 
+import com.google.android.gms.ads.MobileAds
 import com.zmeid.tracksportteam.di.component.DaggerAppComponent
 import com.zmeid.tracksportteam.util.TimberLineNumberDebugTree
 import dagger.android.AndroidInjector
@@ -18,6 +19,8 @@ class BaseApplication : DaggerApplication() {
         super.onCreate()
 
         Timber.plant(timberLineNumberDebugTree)
+
+        MobileAds.initialize(this) {}
     }
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {

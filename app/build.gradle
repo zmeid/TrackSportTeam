@@ -18,8 +18,8 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    viewBinding {
-        enabled = true
+    buildFeatures {
+        viewBinding = true
     }
 
     buildTypes {
@@ -99,5 +99,13 @@ dependencies {
 
     // region Legacy support
     implementation "androidx.legacy:legacy-support-v4:$legacy_support"
+    // endregion
+
+    // region Play Services Ads
+    implementation "com.google.android.gms:play-services-ads:$play_services_ads_version"
+    // endregion
+
+    // region Preference
+    implementation "androidx.preference:preference-ktx:$preference_version"
     // endregion
 }

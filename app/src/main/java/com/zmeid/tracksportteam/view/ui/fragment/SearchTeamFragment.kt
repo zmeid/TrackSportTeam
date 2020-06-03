@@ -10,6 +10,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.InterstitialAd
 import com.zmeid.tracksportteam.R
 import com.zmeid.tracksportteam.databinding.FragmentSearchTeamBinding
 import com.zmeid.tracksportteam.model.Team
@@ -31,6 +33,8 @@ private const val ALERT_DIALOG_IS_SHOWING_TAG = "alertDialogIsShowingTag"
 class SearchTeamFragment : BaseFragment(), SearchViewOnQueryTextChangedListener,
     DialogUtils.ActivatePremiumClickedListener, View.OnClickListener {
 
+    private lateinit var interstitialAd: InterstitialAd
+
     @Inject
     lateinit var viewModelProviderFactory: ViewModelProvider.Factory
 
@@ -40,7 +44,8 @@ class SearchTeamFragment : BaseFragment(), SearchViewOnQueryTextChangedListener,
     @Inject
     lateinit var dialogUtils: DialogUtils
 
-    private lateinit var binding: FragmentSearchTeamBinding
+    private var _binding: FragmentSearchTeamBinding? = null
+    private val binding get() = _binding!!
     private lateinit var searchTeamViewModel: SearchTeamViewModel
     private lateinit var searchViewMenu: SearchView
     private lateinit var searchViewMenuItem: MenuItem
@@ -51,6 +56,8 @@ class SearchTeamFragment : BaseFragment(), SearchViewOnQueryTextChangedListener,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+
+        initInterstitialAd()
 
         searchTeamViewModel = ViewModelProvider(
             this,
@@ -64,7 +71,10 @@ class SearchTeamFragment : BaseFragment(), SearchViewOnQueryTextChangedListener,
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentSearchTeamBinding.inflate(inflater, container, false)
+
+        loadInterstitialAd()
+
+        _binding = FragmentSearchTeamBinding.inflate(inflater, container, false)
 
         getSupportActionBar()?.setDisplayHomeAsUpEnabled(false)
 
@@ -109,6 +119,23 @@ class SearchTeamFragment : BaseFragment(), SearchViewOnQueryTextChangedListener,
         super.onCreateOptionsMenu(menu, inflater)
     }
 
+    private fun initInterstitialAd() {
+        interstitialAd = InterstitialAd(activity?.applicationContext)
+        interstitialAd.adUnitId = "ca-app-pub-3940256099942544/1033173712" //Test Ad ID
+    }
+
+    private fun loadInterstitialAd() {
+        interstitialAd.loadAd(AdRequest.Builder().build())
+    }
+
+    private fun showInterstitialAd() {
+        if (interstitialAd.isLoaded) {
+            interstitialAd.show()
+        } else {
+            Timber.d("The interstitial wasn't loaded yet.")
+        }
+    }
+
     /**
      * Observes if there are any changes in teamSearchResult live data and calls [handleAPIResult]
      */
@@ -134,6 +161,7 @@ class SearchTeamFragment : BaseFragment(), SearchViewOnQueryTextChangedListener,
             }
 
             override fun onTeamClicked(team: Team) {
+                showInterstitialAd()
                 val action =
                     SearchTeamFragmentDirections.actionSearchTeamFragmentToTeamEventHistoryFragment(
                         team.id
@@ -162,6 +190,7 @@ class SearchTeamFragment : BaseFragment(), SearchViewOnQueryTextChangedListener,
         searchTeamViewModel.teamLastSearchWord.observeOnce(this, Observer {
             searchViewMenuItem.expandActionView()
             searchViewMenu.setQuery(it, false)
+            searchViewMenu.clearFocus()
             wordToSearch = it
         })
     }
@@ -194,5 +223,12 @@ class SearchTeamFragment : BaseFragment(), SearchViewOnQueryTextChangedListener,
                 searchTeamViewModel.searchTeam(wordToSearch, true)
             }
         }
+    }
+
+    override fun onDestroyView() {
+        // To prevent memory leak
+        binding.recyclerviewTeamSearch.adapter = null
+        _binding = null
+        super.onDestroyView()
     }
 }

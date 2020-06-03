@@ -23,7 +23,8 @@ class TeamEventHistoryFragment : BaseFragment(), View.OnClickListener {
     @Inject
     lateinit var teamEventHistoryAdapter: TeamEventHistoryAdapter
 
-    private lateinit var binding: FragmentTeamEventHistoryBinding
+    private var _binding: FragmentTeamEventHistoryBinding? = null
+    private val binding get() = _binding!!
     private lateinit var teamEventHistoryViewModel: TeamEventHistoryViewModel
     private var teamId = 0
 
@@ -44,7 +45,7 @@ class TeamEventHistoryFragment : BaseFragment(), View.OnClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentTeamEventHistoryBinding.inflate(inflater, container, false)
+        _binding = FragmentTeamEventHistoryBinding.inflate(inflater, container, false)
 
         binding.apply {
             recyclerviewTeamEventHistory.layoutManager = LinearLayoutManager(context)
@@ -97,5 +98,10 @@ class TeamEventHistoryFragment : BaseFragment(), View.OnClickListener {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

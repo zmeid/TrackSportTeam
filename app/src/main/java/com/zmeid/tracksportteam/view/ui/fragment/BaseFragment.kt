@@ -28,7 +28,7 @@ abstract class BaseFragment : DaggerAppCompatDialogFragment() {
     }
 
     /**
-     * Shows a message to user in the center of activity.
+     * Shows a message to user in the center of fragment.
      */
     fun showUserMessage(textView: TextView, message: String) {
         textView.apply {
@@ -41,6 +41,9 @@ abstract class BaseFragment : DaggerAppCompatDialogFragment() {
         textView.visibility = View.GONE
     }
 
+    /**
+     * Shows a retry button if API call fails.
+     */
     private fun showRetryButton(buttonRetry: Button) {
         buttonRetry.visibility = View.VISIBLE
     }

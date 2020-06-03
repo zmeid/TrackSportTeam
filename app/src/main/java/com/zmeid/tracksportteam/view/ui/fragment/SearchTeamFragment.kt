@@ -165,7 +165,7 @@ class SearchTeamFragment : BaseFragment(), SearchViewOnQueryTextChangedListener,
             }
 
             override fun onTeamClicked(team: Team) {
-                searchTeamViewModel.checkIfItsTheTimeForAds()
+                searchTeamViewModel.checkIfItsTimeForAds()
                 val action =
                     SearchTeamFragmentDirections.actionSearchTeamFragmentToTeamEventHistoryFragment(
                         team.id

@@ -9,7 +9,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 /**
- * [BaseApplication] class exist for the life time of application. It holds [Timber] plant configuration and [DaggerAppComponent] application level injection.
+ * [BaseApplication] class exist for the life time of application. It initializes [MobileAds], holds [Timber] plant configuration and [DaggerAppComponent] application level injection.
  */
 class BaseApplication : DaggerApplication() {
     @Inject

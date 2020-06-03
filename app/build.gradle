@@ -108,4 +108,13 @@ dependencies {
     // region Preference
     implementation "androidx.preference:preference-ktx:$preference_version"
     // endregion
+
+    // region Test
+    testImplementation "junit:junit:$junit_version"
+    testImplementation "org.mockito:mockito-core:$mockito_version"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
+    // has RecyclerViewActions
+    androidTestImplementation "com.android.support.test.espresso:espresso-contrib:$espresso_version"
+    androidTestImplementation "androidx.test:rules:$test_rules_version"
+    // endregion
 }

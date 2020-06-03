@@ -6,7 +6,7 @@ import dagger.Binds
 import dagger.Module
 
 /**
- * This module provides contexts. For ex for [UtilsModule].
+ * This module provides contexts. For ex; for [UtilsModule].
  */
 @Module
 abstract class ContextModule {

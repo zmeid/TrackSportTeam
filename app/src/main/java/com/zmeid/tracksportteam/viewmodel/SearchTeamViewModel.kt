@@ -16,8 +16,7 @@ import javax.inject.Inject
 class SearchTeamViewModel @Inject constructor(
     private val teamRepository: TeamRepository,
     private val sharedPreferences: SharedPreferences
-) :
-    ViewModel() {
+) : ViewModel() {
 
     private var teamLastSearchWordMutable = ""
 
@@ -54,7 +53,7 @@ class SearchTeamViewModel @Inject constructor(
      *
      * [SHARED_PREF_HISTORY_VIEW] is used to decide whether to show ads to user or not. If the count is zero, we show ads when user navigates to TeamEventHistoryFragment.
      */
-    fun checkIfItsTheTimeForAds() {
+    fun checkIfItsTimeForAds() {
         viewModelScope.launch(Dispatchers.Default) {
             val count = sharedPreferences.getInt(SHARED_PREF_HISTORY_VIEW, 0)
             shouldShowAdsMutable.postValue(count == 0)

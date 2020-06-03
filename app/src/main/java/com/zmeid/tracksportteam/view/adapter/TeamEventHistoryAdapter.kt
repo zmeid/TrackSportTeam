@@ -11,7 +11,7 @@ import com.zmeid.tracksportteam.model.TeamEventHistory
 import javax.inject.Inject
 
 /**
- * Used as adapter of team recycler view. View binding is used to bind the views.
+ * Used as adapter of team event history recycler view. View binding is used to bind the views.
  *
  * It uses Eugene W. Myers's difference algorithm to calculate the minimal number of updates to convert one list into another.
  *

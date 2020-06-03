@@ -23,7 +23,7 @@ abstract class BaseFragment : DaggerAppCompatDialogFragment() {
         activity?.progress_bar?.visibility = View.VISIBLE
     }
 
-    private fun hideProgressBar() {
+    fun hideProgressBar() {
         activity?.progress_bar?.visibility = View.GONE
     }
 

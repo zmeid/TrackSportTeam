@@ -24,6 +24,7 @@ buildscript {
         picasso_version = '2.71828'
         legacy_support = '1.0.0'
         play_services_ads_version = '19.1.0'
+        preference_version = '1.1.1'
     }
 
     repositories {

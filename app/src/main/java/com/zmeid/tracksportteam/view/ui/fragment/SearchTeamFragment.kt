@@ -17,7 +17,6 @@ import com.zmeid.tracksportteam.databinding.FragmentSearchTeamBinding
 import com.zmeid.tracksportteam.model.Team
 import com.zmeid.tracksportteam.util.DialogUtils
 import com.zmeid.tracksportteam.util.StringTrimDelegate
-import com.zmeid.tracksportteam.util.observeOnce
 import com.zmeid.tracksportteam.view.adapter.OnItemClickListener
 import com.zmeid.tracksportteam.view.adapter.TeamAdapter
 import com.zmeid.tracksportteam.view.interfaces.SearchViewOnQueryTextChangedListener
@@ -47,8 +46,6 @@ class SearchTeamFragment : BaseFragment(), SearchViewOnQueryTextChangedListener,
     private var _binding: FragmentSearchTeamBinding? = null
     private val binding get() = _binding!!
     private lateinit var searchTeamViewModel: SearchTeamViewModel
-    private lateinit var searchViewMenu: SearchView
-    private lateinit var searchViewMenuItem: MenuItem
     private var searchQueryDelayJob: Job? = null
     private var wordToSearch: String by StringTrimDelegate()
     private var alertDialog: AlertDialog? = null
@@ -65,6 +62,7 @@ class SearchTeamFragment : BaseFragment(), SearchViewOnQueryTextChangedListener,
         ).get(SearchTeamViewModel::class.java)
 
         observeTeamSearchResult()
+        observeShouldShowAds()
     }
 
     override fun onCreateView(
@@ -136,6 +134,12 @@ class SearchTeamFragment : BaseFragment(), SearchViewOnQueryTextChangedListener,
         }
     }
 
+    private fun observeShouldShowAds() {
+        searchTeamViewModel.shouldShowAds.observe(this, Observer {
+            if (it) showInterstitialAd()
+        })
+    }
+
     /**
      * Observes if there are any changes in teamSearchResult live data and calls [handleAPIResult]
      */
@@ -161,7 +165,7 @@ class SearchTeamFragment : BaseFragment(), SearchViewOnQueryTextChangedListener,
             }
 
             override fun onTeamClicked(team: Team) {
-                showInterstitialAd()
+                searchTeamViewModel.checkIfItsTheTimeForAds()
                 val action =
                     SearchTeamFragmentDirections.actionSearchTeamFragmentToTeamEventHistoryFragment(
                         team.id
@@ -175,24 +179,11 @@ class SearchTeamFragment : BaseFragment(), SearchViewOnQueryTextChangedListener,
      * Initializes search menu and sets [SearchViewOnQueryTextChangedListener].
      */
     override fun onPrepareOptionsMenu(menu: Menu) {
-        searchViewMenuItem = menu.findItem(R.id.menu_search)
-        searchViewMenu = searchViewMenuItem.actionView as SearchView
+        val searchViewMenuItem = menu.findItem(R.id.menu_search)
+        val searchViewMenu = searchViewMenuItem.actionView as SearchView
         searchViewMenu.maxWidth =
             Integer.MAX_VALUE // This is a hack to solve close button wrong alignment.
-        observeLastSearchWord()
         searchViewMenu.setOnQueryTextListener(this)
-    }
-
-    /**
-     * If search view is not empty and the devices is rotated; it observes once to get last searched word.
-     */
-    private fun observeLastSearchWord() {
-        searchTeamViewModel.teamLastSearchWord.observeOnce(this, Observer {
-            searchViewMenuItem.expandActionView()
-            searchViewMenu.setQuery(it, false)
-            searchViewMenu.clearFocus()
-            wordToSearch = it
-        })
     }
 
     override fun onQueryTextChange(word: String): Boolean {

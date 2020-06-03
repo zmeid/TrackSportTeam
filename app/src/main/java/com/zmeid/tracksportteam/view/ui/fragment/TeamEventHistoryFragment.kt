@@ -102,6 +102,7 @@ class TeamEventHistoryFragment : BaseFragment(), View.OnClickListener {
 
     override fun onDestroyView() {
         _binding = null
+        hideProgressBar()
         super.onDestroyView()
     }
 }

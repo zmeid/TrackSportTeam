@@ -104,4 +104,8 @@ dependencies {
     // region Play Services Ads
     implementation "com.google.android.gms:play-services-ads:$play_services_ads_version"
     // endregion
+
+    // region Preference
+    implementation "androidx.preference:preference-ktx:$preference_version"
+    // endregion
 }

@@ -10,7 +10,7 @@
   - I have implemented a premium feature idea which intended to allow users to add the team to their favorites. When user clicks to favorite button on team list, there will be an alert dialog: " Add the team to your favorites to receive live updates about team's events. This is a premium feature. By activating premium membership, you can enjoy premium features with no ads! ". I did not implemented Google Play Billing, when user clicks on "ACTIVATE PREMIUM", there will be a toast message which says: "This feature is not implemented yet"
   
   - Other monetization strategies can be like:
-    - 1 month free premium membership to demonstrate our beautiful premium features to users(When we are sure they will love it and then buy :) ).
+    - 1 month free premium membership to demonstrate our beautiful premium features to users(When we are positive that they will love it and then buy :) ).
     - Limiting daily API calls to non-premium users.
   
 - Imagine your application is getting popular and you want to add some sort of tracking and analytics to determine how your users are using your app. How would you approach this?

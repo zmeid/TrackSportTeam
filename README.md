@@ -60,6 +60,9 @@
 - LeakCanary helped me a lot to catch memory leaks and correct memory usage. It shows notifications when LeakCanary's object watcher detects leaks.
 - If GET request fails, there will be an error message with a try again button.
 
+# Tests:
+- Since testing was not in requirements, i implemented one instrumented test with Espresso and one unit test with JUnit and Mockito.
+
 # Tasks before publishing the app:
 - Enable ProGuard.
 - Run full lint inspection(should be done before every commit).

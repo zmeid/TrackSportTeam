@@ -50,6 +50,8 @@ class SearchTeamFragment : BaseFragment(), SearchViewOnQueryTextChangedListener,
     private var wordToSearch: String by StringTrimDelegate()
     private var alertDialog: AlertDialog? = null
 
+    private var shouldShowAds = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -70,7 +72,7 @@ class SearchTeamFragment : BaseFragment(), SearchViewOnQueryTextChangedListener,
         savedInstanceState: Bundle?
     ): View? {
 
-        loadInterstitialAd()
+        searchTeamViewModel.checkIfItsTimeForAds()
 
         _binding = FragmentSearchTeamBinding.inflate(inflater, container, false)
 
@@ -136,7 +138,8 @@ class SearchTeamFragment : BaseFragment(), SearchViewOnQueryTextChangedListener,
 
     private fun observeShouldShowAds() {
         searchTeamViewModel.shouldShowAds.observe(this, Observer {
-            if (it) showInterstitialAd()
+            shouldShowAds = it
+            if (it) loadInterstitialAd()
         })
     }
 
@@ -165,7 +168,8 @@ class SearchTeamFragment : BaseFragment(), SearchViewOnQueryTextChangedListener,
             }
 
             override fun onTeamClicked(team: Team) {
-                searchTeamViewModel.checkIfItsTimeForAds()
+                if (shouldShowAds) showInterstitialAd()
+                searchTeamViewModel.increaseEventHistoryViewCount()
                 val action =
                     SearchTeamFragmentDirections.actionSearchTeamFragmentToTeamEventHistoryFragment(
                         team.id

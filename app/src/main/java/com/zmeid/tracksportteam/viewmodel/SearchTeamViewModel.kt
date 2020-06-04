@@ -57,15 +57,15 @@ class SearchTeamViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.Default) {
             val count = sharedPreferences.getInt(SHARED_PREF_HISTORY_VIEW, 0)
             shouldShowAdsMutable.postValue(count == 0)
-            increaseEventHistoryViewCount(count)
         }
     }
 
     /**
      * Increase the count by 1 and put in [sharedPreferences] as reminder of 3.
      */
-    private fun increaseEventHistoryViewCount(count: Int) {
+    fun increaseEventHistoryViewCount() {
         viewModelScope.launch(Dispatchers.Default) {
+            val count = sharedPreferences.getInt(SHARED_PREF_HISTORY_VIEW, 0)
             val newCount = (count + 1) % 3
             sharedPreferences.edit().putInt(SHARED_PREF_HISTORY_VIEW, newCount).apply()
         }

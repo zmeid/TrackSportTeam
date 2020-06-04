@@ -22,17 +22,18 @@ class TeamEventHistoryViewModel @Inject constructor(private val teamRepository: 
     /**
      * This is the method used by fragment to get team history.
      */
-    fun getTeamHistory(teamId: Int) {
-        if (teamEventHistoryResultMutable.value != null) return
-        viewModelScope.launch(Dispatchers.IO) {
-            teamEventHistoryResultMutable.postValue(ApiResponseWrapper.loading())
-            try {
-                val teamEventHistoryList = teamRepository.getTeamEventHistory(teamId)
-                teamEventHistoryResultMutable.postValue(
-                    ApiResponseWrapper.success(teamEventHistoryList)
-                )
-            } catch (e: Exception) {
-                teamEventHistoryResultMutable.postValue(ApiResponseWrapper.error(exception = e))
+    fun getTeamHistory(teamId: Int, force: Boolean) {
+        if (force || teamEventHistoryResultMutable.value == null) {
+            viewModelScope.launch(Dispatchers.IO) {
+                teamEventHistoryResultMutable.postValue(ApiResponseWrapper.loading())
+                try {
+                    val teamEventHistoryList = teamRepository.getTeamEventHistory(teamId)
+                    teamEventHistoryResultMutable.postValue(
+                        ApiResponseWrapper.success(teamEventHistoryList)
+                    )
+                } catch (e: Exception) {
+                    teamEventHistoryResultMutable.postValue(ApiResponseWrapper.error(exception = e))
+                }
             }
         }
     }

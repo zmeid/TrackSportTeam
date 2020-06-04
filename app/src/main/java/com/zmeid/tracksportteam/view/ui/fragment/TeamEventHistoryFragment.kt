@@ -57,7 +57,7 @@ class TeamEventHistoryFragment : BaseFragment(), View.OnClickListener {
         showBackNavigationButton()
 
         teamId = args.teamId
-        getTeamHistory(teamId)
+        getTeamHistory(teamId, false)
         return binding.root
     }
 
@@ -66,8 +66,8 @@ class TeamEventHistoryFragment : BaseFragment(), View.OnClickListener {
         setHasOptionsMenu(true)
     }
 
-    private fun getTeamHistory(teamId: Int) {
-        teamEventHistoryViewModel.getTeamHistory(teamId)
+    private fun getTeamHistory(teamId: Int, force: Boolean) {
+        teamEventHistoryViewModel.getTeamHistory(teamId, force)
     }
 
     private fun observeTeamHistory() {
@@ -85,7 +85,7 @@ class TeamEventHistoryFragment : BaseFragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             binding.errorComponentHolder.buttonRetry.id -> {
-                getTeamHistory(teamId)
+                getTeamHistory(teamId, true)
             }
         }
     }

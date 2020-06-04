@@ -35,7 +35,6 @@
 - Navigation Component with Safe Args
 - Livedata
 - Lifecycle-Aware Custom DialogUtils
-- Leakcanary by Square(To catch memory leaks)
 - Retrofit
 - Picasso
 - OkHttp logging interceptor
@@ -57,7 +56,6 @@
 - Almost all libraries/classes are injected by Dagger to classes.
 - Timber is configured with custom TimberLineNumberDebugTree which provides clickable logs to navigate developer to the point where log was generated.
 - I tried to document all classes and necessary methods with KDoc.
-- LeakCanary helped me a lot to catch memory leaks and correct memory usage. It shows notifications when LeakCanary's object watcher detects leaks.
 - If GET request fails, there will be an error message with a try again button.
 
 # Tests:

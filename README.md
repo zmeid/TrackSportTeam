@@ -7,7 +7,7 @@
 - Monetization strategies:
   - I have implemented AdMob to show interstitial ads. After user finds the team with searching feature and clicks on sport team to display event history, interstitial ad is shown. In order to not bore users with many ads, i show ads after every 3 clicks on sport team.
   
-  - I have implemented a premium feature idea which intended to allow users to add the team to their favorites. When user clicks to favorite button on team list, there will be an alert dialog: " Add the team to your favorites to receive live updates about team's events. This is a premium feature. By activating premium membership, you can enjoy premium features with no ads! ". I did not implemented Google Play Billing, when user clicks on "ACTIVATE PREMIUM", there will be a toast message which says: "This feature is not implemented yet"
+  - I have implemented a premium feature idea which intended to allow users to add the team to their favorites. When user clicks to favorite button on team list, there will be an alert dialog: " Add the team to your favorites to receive live updates about team's events. This is a premium feature. By activating premium membership, you can enjoy premium features with no ads! ". I did not implement Google Play Billing, when user clicks on "ACTIVATE PREMIUM", there will be a toast message which says: "This feature is not implemented yet"
   
   - Other monetization strategies can be like:
     - 1 month free premium membership to demonstrate our beautiful premium features to users(When we are positive that they will love it and then buy :) ).

@@ -61,7 +61,7 @@
 - If GET request fails, there will be an error message with a try again button.
 
 # Tests:
-- Since testing was not in requirements, i implemented one instrumented test with Espresso and one unit test with JUnit and Mockito as example.
+- Since testing was not in requirements, to set examples; i implemented one instrumented test with Espresso and one unit test with JUnit and Mockito.
 
 # Tasks before publishing the app:
 - Enable ProGuard.
